@@ -1,0 +1,356 @@
+// ─── Modat Magnify Integration Styles ────────────────────────────────────────
+// Prefix: .modat-
+// Color rules:
+//   - Semantic colors (severity, KEV, status) use explicit RGBA/hex.
+//   - Non-semantic elements (secondary text, borders, chevrons, counts)
+//     use opacity on inherited theme color (Bug #11 rule — works on both themes).
+
+// ─── Deep link row ───────────────────────────────────────────────────────────
+.modat-deeplink-row {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+// ─── Host context section ─────────────────────────────────────────────────────
+.modat-host-context {
+  padding-bottom: 4px;
+}
+
+// ─── Monospace values (IPs, ports, ASN, banners) ─────────────────────────────
+.modat-mono {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+}
+
+// ─── Secondary / muted text ──────────────────────────────────────────────────
+.modat-secondary {
+  opacity: 0.55;
+  font-size: 11px;
+}
+
+// ─── Flag / country ISO display ──────────────────────────────────────────────
+.modat-flag {
+  display: inline-block;
+  margin-right: 4px;
+  font-weight: 600;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+// ─── Collapsible section toggle ──────────────────────────────────────────────
+.modat-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 5px 0 4px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+  user-select: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  .p-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    margin: 0;
+  }
+
+  .modat-count {
+    font-weight: normal;
+    opacity: 0.5;
+  }
+
+  .modat-chevron {
+    font-size: 10px;
+    color: #aaa;
+  }
+}
+
+.modat-section-body {
+  padding: 4px 0 6px 0;
+}
+
+// ─── Badge: anycast, transport ────────────────────────────────────────────────
+.modat-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.modat-badge-anycast {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.modat-badge-transport {
+  background-color: rgba(128, 128, 128, 0.12);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  opacity: 0.8;
+  font-size: 9px;
+  margin-left: 0;
+}
+
+// ─── Threat tag pills (color-coded by severity) ───────────────────────────────
+// pill-tag base class is provided by Polarity's design system.
+.modat-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.modat-tag-red {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+  color: #dc3545 !important;
+  border-color: rgba(220, 53, 69, 0.35) !important;
+}
+
+.modat-tag-orange {
+  background-color: rgba(253, 126, 20, 0.15) !important;
+  color: #fd7e14 !important;
+  border-color: rgba(253, 126, 20, 0.35) !important;
+}
+
+.modat-tag-yellow {
+  background-color: rgba(255, 193, 7, 0.12) !important;
+  color: #c89400 !important;
+  border-color: rgba(255, 193, 7, 0.35) !important;
+}
+
+.modat-tag-grey {
+  opacity: 0.7;
+}
+
+// ─── CVE section ─────────────────────────────────────────────────────────────
+.modat-kev-count {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.35);
+  margin-left: 4px;
+}
+
+.modat-cve-row {
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.modat-cve-id {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2px;
+
+  a {
+    font-size: 11px;
+    font-weight: 600;
+  }
+}
+
+.modat-kev-badge {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.4);
+  vertical-align: middle;
+}
+
+// ─── CVSS severity colors ─────────────────────────────────────────────────────
+.modat-cvss-critical {
+  color: #dc3545;
+  font-weight: 700;
+}
+
+.modat-cvss-high {
+  color: #fd7e14;
+  font-weight: 600;
+}
+
+.modat-cvss-medium {
+  color: #c89400;
+}
+
+.modat-cvss-low {
+  color: #52c41a;
+}
+
+.modat-cvss-none {
+  opacity: 0.55;
+}
+
+.modat-ext-icon {
+  opacity: 0.55;
+  font-size: 9px;
+}
+
+// ─── Open Services section ────────────────────────────────────────────────────
+.modat-services-body {
+  padding: 2px 0 6px 0;
+}
+
+.modat-service-row {
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}
+
+.modat-service-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.modat-service-port {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.modat-service-protocol {
+  font-size: 11px;
+  opacity: 0.8;
+  flex: 1;
+}
+
+.modat-service-date {
+  font-size: 10px;
+}
+
+.modat-history-btn {
+  font-size: 10px;
+  padding: 1px 8px;
+  line-height: 16px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+// ─── Inline history panel ─────────────────────────────────────────────────────
+.modat-history-panel {
+  margin-top: 4px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background-color: rgba(128, 128, 128, 0.06);
+  border: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+.modat-history-header {
+  margin-bottom: 4px;
+}
+
+.modat-history-row {
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.08);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.modat-history-date {
+  display: inline-block;
+  min-width: 90px;
+}
+
+.modat-history-proto {
+  display: inline-block;
+  min-width: 60px;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.modat-banner {
+  margin-top: 2px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  opacity: 0.65;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+// ─── All Hosts section ────────────────────────────────────────────────────────
+.modat-host-card {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.modat-host-card-ip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.modat-inline-pills {
+  display: inline-flex;
+}
+
+.modat-host-card-meta {
+  font-size: 10px;
+  margin-top: 1px;
+}
+
+.modat-load-more-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+.modat-load-more-btn {
+  font-size: 10px;
+  padding: 2px 10px;
+}
+
+// ─── Error & empty states ─────────────────────────────────────────────────────
+.modat-error {
+  color: #dc3545;
+  font-size: 11px;
+  padding: 3px 0;
+}
+
+.modat-empty {
+  opacity: 0.6;
+  font-size: 11px;
+  padding: 3px 0;
+}

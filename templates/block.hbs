@@ -1,0 +1,271 @@
+{{! ── Deep link to Modat Magnify (top, always visible — Bug #13) ────────── }}
+<div class="modat-deeplink-row">
+  <span class="p-key">Modat Magnify:</span>
+  <span class="p-value">
+    <a href={{modatSearchUrl}} class="p-link" target="_blank" rel="noopener noreferrer">
+      {{fa-icon "external-link-square" fixedWidth=true}}
+      Open in Magnify
+    </a>
+  </span>
+</div>
+
+{{! ── Host Context (always visible) ──────────────────────────────────────── }}
+<div class="modat-section-body modat-host-context">
+  <div>
+    <span class="p-key">IP Address:</span>
+    <span class="p-value modat-mono">{{primaryHost.ip}}</span>
+    {{#if primaryHost.is_anycast}}
+      <span class="modat-badge modat-badge-anycast">ANYCAST</span>
+    {{/if}}
+  </div>
+  <div>
+    <span class="p-key">Location:</span>
+    <span class="p-value">
+      {{#if primaryHost.countryIso}}
+        <span class="modat-flag">{{primaryHost.countryIso}}</span>
+      {{/if}}
+      {{primaryHost.locationString}}
+    </span>
+  </div>
+  <div>
+    <span class="p-key">ASN:</span>
+    <span class="p-value modat-mono">{{primaryHost.asnString}}</span>
+  </div>
+  {{#if (gt primaryHost.fqdns.length 0)}}
+  <div>
+    <span class="p-key">Hostnames:</span>
+    <span class="p-value">{{primaryHost.fqdnsDisplay}}</span>
+  </div>
+  {{/if}}
+</div>
+
+{{! ── Threat Classification ───────────────────────────────────────────────── }}
+{{#if hasTags}}
+<div class="modat-section-toggle" {{action "toggleSection" "Tags"}}>
+  <span class="p-title">
+    {{fa-icon "tag" fixedWidth=true}}
+    Threat Classification
+    <span class="modat-count">({{primaryHost.tags.length}})</span>
+  </span>
+  <span class="modat-chevron">
+    {{#if block._state.showTags}}
+      {{fa-icon "chevron-up" fixedWidth=true}}
+    {{else}}
+      {{fa-icon "chevron-down" fixedWidth=true}}
+    {{/if}}
+  </span>
+</div>
+{{#if block._state.showTags}}
+<div class="modat-section-body">
+  <div class="modat-pill-row">
+    {{#each primaryHost.tags as |tag|}}
+      <span class="pill-tag modat-tag-{{tag.colorClass}}">{{tag.name}}</span>
+    {{/each}}
+  </div>
+</div>
+{{/if}}
+{{/if}}
+
+{{! ── Vulnerabilities ─────────────────────────────────────────────────────── }}
+{{#if hasCves}}
+<div class="modat-section-toggle" {{action "toggleSection" "Cves"}}>
+  <span class="p-title">
+    {{fa-icon "bug" fixedWidth=true}}
+    Vulnerabilities
+    <span class="modat-count">({{primaryHost.cves.length}})</span>
+    {{#if (gt primaryHost.kevCount 0)}}
+      <span class="modat-kev-count">{{primaryHost.kevCount}} KEV</span>
+    {{/if}}
+  </span>
+  <span class="modat-chevron">
+    {{#if block._state.showCves}}
+      {{fa-icon "chevron-up" fixedWidth=true}}
+    {{else}}
+      {{fa-icon "chevron-down" fixedWidth=true}}
+    {{/if}}
+  </span>
+</div>
+{{#if block._state.showCves}}
+<div class="modat-section-body">
+  {{#each primaryHost.cves as |cve|}}
+  <div class="modat-cve-row">
+    <div class="modat-cve-id">
+      <a href={{cve.nvdUrl}} class="p-link" target="_blank" rel="noopener noreferrer">
+        {{cve.id}}
+        {{fa-icon "external-link-square" fixedWidth=true class="modat-ext-icon"}}
+      </a>
+      {{#if cve.is_kev}}
+        <span class="modat-kev-badge">KEV</span>
+      {{/if}}
+    </div>
+    <div>
+      <span class="p-key">CVSS:</span>
+      {{#if cve.cvss}}
+        <span class="p-value {{cve.cvssColorClass}}">{{cve.cvss}}</span>
+      {{else}}
+        <span class="p-value modat-secondary">N/A</span>
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/if}}
+{{/if}}
+
+{{! ── Open Services ───────────────────────────────────────────────────────── }}
+{{#if hasServices}}
+<div class="modat-section-toggle" {{action "toggleSection" "Services"}}>
+  <span class="p-title">
+    {{fa-icon "server" fixedWidth=true}}
+    Open Services
+    <span class="modat-count">({{primaryHost.services.length}})</span>
+  </span>
+  <span class="modat-chevron">
+    {{#if block._state.showServices}}
+      {{fa-icon "chevron-up" fixedWidth=true}}
+    {{else}}
+      {{fa-icon "chevron-down" fixedWidth=true}}
+    {{/if}}
+  </span>
+</div>
+{{#if block._state.showServices}}
+<div class="modat-section-body modat-services-body">
+  {{#each primaryHost.services as |service|}}
+  <div class="modat-service-row">
+    <div class="modat-service-meta">
+      <span class="modat-service-transport modat-badge modat-badge-transport">{{service.transport}}</span>
+      <span class="p-value modat-service-port modat-mono">{{service.port}}</span>
+      <span class="modat-service-protocol">{{service.protocol}}</span>
+      <span class="modat-secondary modat-service-date">{{service.scanned_at}}</span>
+      <button
+        class="p-btn btn btn-sm modat-history-btn"
+        {{action "toggleServiceHistory" service}}
+        disabled={{service.isLoadingHistory}}
+      >
+        {{#if service.isLoadingHistory}}
+          {{fa-icon "circle-notch" spin=true fixedWidth=true}}
+          Loading…
+        {{else if service.historyVisible}}
+          {{fa-icon "chevron-up" fixedWidth=true}}
+          Hide
+        {{else}}
+          {{fa-icon "history" fixedWidth=true}}
+          History
+        {{/if}}
+      </button>
+    </div>
+
+    {{! ── Inline history expansion ──────────────────────────────── }}
+    {{#if service.historyVisible}}
+    <div class="modat-history-panel">
+      {{#if service.historyError}}
+        <div class="modat-error">
+          {{fa-icon "exclamation-circle" fixedWidth=true}}
+          {{service.historyError}}
+        </div>
+      {{else if (gt service.history.length 0)}}
+        <div class="modat-history-header">
+          <span class="modat-secondary">Scan history — {{service.history.length}} scan(s)</span>
+        </div>
+        {{#each service.history as |scan|}}
+        <div class="modat-history-row">
+          <span class="modat-secondary modat-history-date">{{scan.scanned_at}}</span>
+          <span class="modat-history-proto modat-mono">{{scan.protocol}}</span>
+          {{#if scan.hasHttp}}
+            <div class="modat-banner">
+              {{#if scan.httpTitle}}<span class="modat-http-title">{{scan.httpTitle}}</span>{{/if}}
+              {{#if scan.httpStatus}}<span class="modat-secondary"> (HTTP {{scan.httpStatus}})</span>{{/if}}
+            </div>
+          {{else if scan.hasSsh}}
+            <div class="modat-banner">
+              {{#if scan.sshServerId}}<span class="modat-mono">{{scan.sshServerId}}</span>{{/if}}
+              {{#if scan.sshHashsh}}<span class="modat-secondary"> · HASSH: {{scan.sshHashsh}}</span>{{/if}}
+            </div>
+          {{else if scan.hasBanner}}
+            <div class="modat-banner">{{scan.banner}}</div>
+          {{/if}}
+        </div>
+        {{/each}}
+      {{else}}
+        <div class="modat-secondary modat-empty">
+          {{fa-icon "info-circle" fixedWidth=true}}
+          No scan history found for the requested time range.
+        </div>
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+  {{/each}}
+</div>
+{{/if}}
+{{/if}}
+
+{{! ── All Hosts (domain entities with multiple results only) ─────────────── }}
+{{#if hasMultipleHosts}}
+<div class="modat-section-toggle" {{action "toggleSection" "AllHosts"}}>
+  <span class="p-title">
+    {{fa-icon "globe" fixedWidth=true}}
+    All Hosts
+    <span class="modat-count">({{details.totalRecords}} found)</span>
+  </span>
+  <span class="modat-chevron">
+    {{#if block._state.showAllHosts}}
+      {{fa-icon "chevron-up" fixedWidth=true}}
+    {{else}}
+      {{fa-icon "chevron-down" fixedWidth=true}}
+    {{/if}}
+  </span>
+</div>
+{{#if block._state.showAllHosts}}
+<div class="modat-section-body">
+  {{#each displayedHosts as |host|}}
+  <div class="modat-host-card">
+    <div class="modat-host-card-ip">
+      <span class="modat-mono">{{host.ip}}</span>
+      {{#if host.hasTags}}
+        <span class="modat-pill-row modat-inline-pills">
+          {{#each host.tags as |tag|}}
+            <span class="pill-tag modat-tag-{{tag.colorClass}}">{{tag.name}}</span>
+          {{/each}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="modat-host-card-meta modat-secondary">
+      {{host.locationString}}
+      {{#if (gt host.services.length 0)}}
+        · {{host.services.length}} service(s)
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
+
+  {{! Load More footer }}
+  <div class="modat-load-more-row">
+    <span class="modat-secondary">
+      Showing {{showingCount}} of {{details.totalRecords}}
+    </span>
+    {{#if hasMoreHosts}}
+      <button
+        class="p-btn btn btn-sm modat-load-more-btn"
+        {{action "loadMoreHosts"}}
+        disabled={{block._state.isLoadingMoreHosts}}
+      >
+        {{#if block._state.isLoadingMoreHosts}}
+          {{fa-icon "circle-notch" spin=true fixedWidth=true}}
+          Loading…
+        {{else}}
+          {{fa-icon "plus" fixedWidth=true}}
+          Load More
+        {{/if}}
+      </button>
+    {{/if}}
+  </div>
+  {{#if block._state.loadMoreError}}
+    <div class="modat-error mt-1">
+      {{fa-icon "exclamation-circle" fixedWidth=true}}
+      {{block._state.loadMoreError}}
+    </div>
+  {{/if}}
+</div>
+{{/if}}
+{{/if}}

@@ -1,0 +1,25 @@
+{
+  "root": {
+    "path": "",
+    "on_null": "return_empty"
+  },
+  "pipeline": [
+    { "op": "copy", "from": "entityType",                          "to": "reduced_results.entity_type" },
+    { "op": "copy", "from": "totalRecords",                        "to": "reduced_results.total_hosts" },
+    { "op": "copy", "from": "primaryHost.ip",                      "to": "reduced_results.ip" },
+    { "op": "copy", "from": "primaryHost.locationString",          "to": "reduced_results.location" },
+    { "op": "copy", "from": "primaryHost.asnString",               "to": "reduced_results.asn" },
+    { "op": "copy", "from": "primaryHost.is_anycast",              "to": "reduced_results.is_anycast" },
+    { "op": "copy", "from": "primaryHost.fqdns",                   "to": "reduced_results.hostnames" },
+    { "op": "copy", "from": "primaryHost.tags[].name",             "to": "reduced_results.threat_tags" },
+    { "op": "copy", "from": "primaryHost.cves[].id",               "to": "reduced_results.cve_ids" },
+    { "op": "copy", "from": "primaryHost.cves[].cvss",             "to": "reduced_results.cve_cvss_scores" },
+    { "op": "copy", "from": "primaryHost.kevCount",                "to": "reduced_results.kev_count" },
+    { "op": "copy", "from": "primaryHost.services[].port",         "to": "reduced_results.open_ports" },
+    { "op": "copy", "from": "primaryHost.services[].protocol",     "to": "reduced_results.protocols" },
+    { "op": "prune", "strategy": "empty_values",                   "target": "reduced_results" }
+  ],
+  "output": {
+    "result": "$working.reduced_results"
+  }
+}
