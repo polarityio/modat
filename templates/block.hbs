@@ -39,31 +39,13 @@
   {{/if}}
 </div>
 
-{{! ── Threat Classification ───────────────────────────────────────────────── }}
+{{! ── Threat Classification — always-visible pill tags ───────────────────── }}
 {{#if hasTags}}
-<div class="modat-section-toggle" {{action "toggleSection" "Tags"}}>
-  <span class="p-title">
-    {{fa-icon "tag" fixedWidth=true}}
-    Threat Classification
-    <span class="modat-count">({{primaryHost.tags.length}})</span>
-  </span>
-  <span class="modat-chevron">
-    {{#if block._state.showTags}}
-      {{fa-icon "chevron-up" fixedWidth=true}}
-    {{else}}
-      {{fa-icon "chevron-down" fixedWidth=true}}
-    {{/if}}
-  </span>
+<div class="modat-tags-row">
+  {{#each primaryHost.tags as |tag|}}
+    <span class="pill-tag modat-tag-{{tag.colorClass}}">{{tag.name}}</span>
+  {{/each}}
 </div>
-{{#if block._state.showTags}}
-<div class="modat-section-body">
-  <div class="modat-pill-row">
-    {{#each primaryHost.tags as |tag|}}
-      <span class="pill-tag modat-tag-{{tag.colorClass}}">{{tag.name}}</span>
-    {{/each}}
-  </div>
-</div>
-{{/if}}
 {{/if}}
 
 {{! ── Vulnerabilities ─────────────────────────────────────────────────────── }}

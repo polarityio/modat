@@ -69,17 +69,22 @@ function transformHostRecord(host) {
     colorClass: getTagColorClass(tagName)
   }));
 
-  const cves = (host.cves || []).map((cve) => ({
-    id: cve.id,
-    cvss: cve.cvss !== null && cve.cvss !== undefined ? parseFloat(cve.cvss).toFixed(1) : null,
-    cvssRaw: cve.cvss,
-    is_kev: !!cve.is_kev,
-    cvssColorClass: `modat-cvss-${getCvssColorClass(cve.cvss)}`,
-    nvdUrl: `https://nvd.nist.gov/vuln/detail/${cve.id}`
-  }));
+  const cves = (host.cves || [])
+    .map((cve) => ({
+      id: cve.id,
+      cvss: cve.cvss !== null && cve.cvss !== undefined ? parseFloat(cve.cvss).toFixed(1) : null,
+      cvssRaw: cve.cvss,
+      is_kev: !!cve.is_kev,
+      cvssColorClass: `modat-cvss-${getCvssColorClass(cve.cvss)}`,
+      nvdUrl: `https://nvd.nist.gov/vuln/detail/${cve.id}`
+    }))
+    // KEV CVEs first, then sort by CVSS score descending
+    .sort((a, b) => {
+      if (b.is_kev !== a.is_kev) return b.is_kev ? 1 : -1;
+      return (b.cvssRaw || 0) - (a.cvssRaw || 0);
+    });
 
-  // Services sorted ascending by port; include history state fields
-  // that will be mutated by Ember.set() inside the component.
+  // Services sorted ascending by port
   const services = (host.services || [])
     .map((svc) => ({
       transport: svc.transport || 'tcp',
