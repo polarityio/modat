@@ -39,12 +39,15 @@
   {{/if}}
 </div>
 
-{{! ── Threat Classification — always-visible pill tags ───────────────────── }}
+{{! ── Threat Classification ───────────────────────────────────────────────── }}
 {{#if hasTags}}
-<div class="modat-tags-row">
-  {{#each primaryHost.tags as |tag|}}
-    <span class="pill-tag modat-tag-{{tag.colorClass}}">{{tag.name}}</span>
-  {{/each}}
+<div class="modat-classification-row">
+  <span class="p-key modat-classification-label">Threat Classification:</span>
+  <span class="p-value modat-classification-pills">
+    {{#each primaryHost.tags as |tag|}}
+      <span class="pill-tag modat-tag-{{tag.colorClass}}">{{tag.name}}</span>
+    {{/each}}
+  </span>
 </div>
 {{/if}}
 

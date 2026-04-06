@@ -103,14 +103,32 @@
   margin-left: 0;
 }
 
-// ─── Threat tag pills (color-coded by severity) ───────────────────────────────
-// pill-tag base class is provided by Polarity's design system.
-.modat-tags-row,
+// ─── Threat Classification row ────────────────────────────────────────────────
+// Renders as a labeled p-key / p-value row with color-coded pill-tag pills.
+.modat-classification-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin: 4px 0 4px;
+}
+
+.modat-classification-label {
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.modat-classification-pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+// ─── Pill row (used in All Hosts inline tags) ─────────────────────────────────
 .modat-pill-row {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin: 4px 0 6px;
 }
 
 .modat-tag-red {
