@@ -1,6 +1,6 @@
 {
   "name": "modat",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Polarity integration for Modat Magnify Host DNA — IP and domain threat intelligence",
   "main": "./integration.js",
   "private": true,
