@@ -104,7 +104,6 @@
 }
 
 // ─── Threat Classification row ────────────────────────────────────────────────
-// Renders as a labeled p-key / p-value row with color-coded pill-tag pills.
 .modat-classification-row {
   display: flex;
   align-items: flex-start;
@@ -124,6 +123,49 @@
   vertical-align: middle;
 }
 
+// ─── Threat classification pill — standalone base (no pill-tag dependency) ───
+.modat-threat-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 16px;
+  vertical-align: middle;
+  border: 1px solid transparent;
+}
+
+// Red — Malicious, C2, Honeypot, Compromised
+.modat-threat-red {
+  background-color: rgba(220, 53, 69, 0.18);
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.4);
+}
+
+// Orange — IoT, OT, SCADA, ICS, Healthcare, etc.
+.modat-threat-orange {
+  background-color: rgba(253, 126, 20, 0.18);
+  color: #fd7e14;
+  border-color: rgba(253, 126, 20, 0.4);
+}
+
+// Yellow — VPN, Proxy Server, Remote Access, Open Directory, Open Bucket
+.modat-threat-yellow {
+  background-color: rgba(255, 193, 7, 0.18);
+  color: #b8860b;
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+// Grey — all other classifications
+.modat-threat-grey {
+  background-color: rgba(128, 128, 128, 0.12);
+  color: inherit;
+  border-color: rgba(128, 128, 128, 0.25);
+  opacity: 0.8;
+}
+
 // ─── Pill row (used in All Hosts inline tags) ─────────────────────────────────
 .modat-pill-row {
   display: flex;
@@ -131,27 +173,6 @@
   gap: 4px;
 }
 
-.modat-tag-red {
-  background-color: rgba(220, 53, 69, 0.15) !important;
-  color: #dc3545 !important;
-  border-color: rgba(220, 53, 69, 0.35) !important;
-}
-
-.modat-tag-orange {
-  background-color: rgba(253, 126, 20, 0.15) !important;
-  color: #fd7e14 !important;
-  border-color: rgba(253, 126, 20, 0.35) !important;
-}
-
-.modat-tag-yellow {
-  background-color: rgba(255, 193, 7, 0.12) !important;
-  color: #c89400 !important;
-  border-color: rgba(255, 193, 7, 0.35) !important;
-}
-
-.modat-tag-grey {
-  opacity: 0.7;
-}
 
 // ─── CVE section ─────────────────────────────────────────────────────────────
 .modat-kev-count {

@@ -64,10 +64,15 @@ function transformHostRecord(host) {
   const geo = host.geo || {};
   const asn = host.asn || {};
 
-  const tags = (host.tags || []).map((tagName) => ({
-    name: tagName,
-    colorClass: getTagColorClass(tagName)
-  }));
+  const tags = (host.tags || []).map((tagName) => {
+    const color = getTagColorClass(tagName);
+    return {
+      name: tagName,
+      colorClass: color,
+      // Pre-computed full CSS class — avoids unreliable Handlebars class interpolation
+      pillClass: `modat-threat-pill modat-threat-${color}`
+    };
+  });
 
   const cves = (host.cves || [])
     .map((cve) => ({
